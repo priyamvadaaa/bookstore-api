@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+.env/
+
+# Test and coverage outputs
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE/project files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Bookstore API data
+book.json
+
+# Logs
+*.log
+
+# Node/npm (if ever used)
+node_modules/
+
+# Misc
+*.bak
+*.tmp
+
+# Git
+.git/
+
