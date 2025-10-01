@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Stray Kids",
+    "author": "Ana",
+    "price": 8.88,
+    "stock": 1
+  },
+  {
+    "id": 2,
+    "title": "Stray Kids",
+    "author": "Christopher",
+    "price": 35.0,
+    "stock": 50
+  }
+]

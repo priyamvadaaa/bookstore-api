@@ -1,50 +1,43 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+Version change: [CONSTITUTION_VERSION] → 1.1.0
+Modified principles: All placeholders replaced with concrete principles
+Added sections: Additional Constraints, Development Workflow
+Removed sections: None
+Templates requiring updates:
+✅ plan-template.md (Constitution Check aligned)
+✅ spec-template.md (testing, performance, user experience requirements reflected)
+✅ tasks-template.md (TDD, contract/integration test discipline enforced)
+Follow-up TODOs:
+TODO(RATIFICATION_DATE): Original adoption date required for governance record
+-->
+
+# Spec API Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Code Quality
+All code MUST comply with PEP8 and project linting rules. Structure must be clear and maintainable. Dead code, unused imports, and ambiguous naming are prohibited. Rationale: Ensures long-term maintainability and onboarding ease.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Testing Standards
+Test-Driven Development (TDD) is mandatory. All endpoints MUST have contract and integration tests written before implementation. Tests must fail before code is written (Red-Green-Refactor cycle). Rationale: Guarantees reliability and prevents regressions.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. User Experience Consistency
+API responses MUST be consistent in format (JSON), documented, and error handling standardized. All endpoints must provide clear error messages and status codes. Rationale: Enables predictable client integration and reduces support burden.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Performance Requirements
+All endpoints MUST meet minimum performance targets: <200ms p95 latency, scalable to 1000 req/s. Performance tests required for major features. Rationale: Ensures responsiveness and scalability for production use.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Maintainability & Observability
+Structured logging and monitoring are required for all deployed services. Versioning follows MAJOR.MINOR.PATCH. Breaking changes require migration plan. Rationale: Enables debugging, auditability, and safe evolution.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Additional Constraints
+Flask-Restful, Python 3.11+, pytest for testing, structured logging, deployment on Linux. All dependencies must be documented. Security best practices must be followed for API endpoints.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+Code review is mandatory for all changes. All tests must pass before merge. Deployment requires approval and compliance verification with all principles. Violations must be documented and justified before proceeding.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+Constitution supersedes all other practices. Amendments require documentation, approval, and migration plan. All PRs/reviews must verify compliance. Versioning: MAJOR for principle removals/redefinitions, MINOR for new principles/sections, PATCH for clarifications.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE): Original adoption date required | **Last Amended**: 2025-10-01
