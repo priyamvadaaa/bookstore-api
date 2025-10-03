@@ -110,6 +110,19 @@ class BookSortedByPrice(Resource):
         sorted_books = sorted(books, key=lambda b: b['price'])
         return sorted_books, 200
 
+class BookAuthorSearch(Resource):
+    def get(self, author):
+        logger.info(f'GET /books/author/{author} called')
+        if not author or not author.strip():
+            logger.warning('Author search term is empty or missing')
+            abort(400, message="Author search term is required.")
+        books = load_books()
+        matches = [b for b in books if author.lower() in b['author'].lower()]
+        if not matches:
+            logger.info(f'No books found matching author: {author}')
+            return {'message': f'No books found with author containing "{author}"'}, 404
+        return matches, 200
+
 class Home(Resource):
     def get(self):
         endpoints = {
@@ -131,6 +144,7 @@ api.add_resource(BookList, '/books')
 api.add_resource(Book, '/books/<int:book_id>')
 api.add_resource(BookTitleSearch, '/books/title/<string:title>')
 api.add_resource(BookSortedByPrice, '/books/sort')
+api.add_resource(BookAuthorSearch, '/books/author/<string:author>')
 api.add_resource(Home, '/')
 
 # This is a sample Python script.

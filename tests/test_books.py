@@ -92,3 +92,47 @@ def test_sorted_books_by_price_empty(client):
     assert resp.status_code == 200
     data = resp.get_json()
     assert data == []
+
+def test_search_books_by_author(client):
+    # Add test books
+    books = [
+        {'id': 1, 'title': 'Book A', 'author': 'Author X', 'price': 10.0, 'stock': 5},
+        {'id': 2, 'title': 'Book B', 'author': 'Author Y', 'price': 12.0, 'stock': 3},
+        {'id': 3, 'title': 'Book C', 'author': 'Author X', 'price': 8.0, 'stock': 7},
+    ]
+    with open('book.json', 'w') as f:
+        import json; json.dump(books, f)
+    # Search for Author X
+    response = client.get('/books/author/Author X')
+    assert response.status_code == 200
+    data = response.get_json()
+    assert len(data) == 2
+    assert all('Author X' in b['author'] for b in data)
+    # Search for non-existent author
+    response = client.get('/books/author/Unknown')
+    assert response.status_code == 404
+    assert 'book not found' in response.get_json()['message'].lower()
+
+def test_search_books_by_author_edge_cases(client):
+    # Add books with special characters and similar author names
+    books = [
+        {'id': 1, 'title': 'Book D', 'author': 'Author-X', 'price': 10.0, 'stock': 5},
+        {'id': 2, 'title': 'Book E', 'author': 'Author X', 'price': 12.0, 'stock': 3},
+        {'id': 3, 'title': 'Book F', 'author': 'author x', 'price': 8.0, 'stock': 7},
+        {'id': 4, 'title': 'Book G', 'author': 'Author X.', 'price': 9.0, 'stock': 2},
+    ]
+    with open('book.json', 'w') as f:
+        import json; json.dump(books, f)
+    # Search for 'Author X' (case-insensitive, partial)
+    response = client.get('/books/author/author x')
+    assert response.status_code == 200
+    data = response.get_json()
+    assert len(data) >= 3  # Should match Author X, author x, Author X.
+    # Search for special character
+    response = client.get('/books/author/Author-X')
+    assert response.status_code == 200
+    data = response.get_json()
+    assert any('Author-X' in b['author'] for b in data)
+    # Search for whitespace
+    response = client.get('/books/author/ ')
+    assert response.status_code == 400
