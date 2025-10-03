@@ -12,5 +12,12 @@
     "author": "Christopher",
     "price": 35.0,
     "stock": 50
+  },
+  {
+    "id": 3,
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "price": 8.99,
+    "stock": 7
   }
 ]

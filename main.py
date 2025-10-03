@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api, abort
 import logging
 import json
@@ -110,13 +110,30 @@ class BookSortedByPrice(Resource):
         sorted_books = sorted(books, key=lambda b: b['price'])
         return sorted_books, 200
 
+class Home(Resource):
+    def get(self):
+        endpoints = {
+            "List all books": "/books [GET]",
+            "Add a book": "/books [POST]",
+            "Get book details": "/books/<id> [GET]",
+            "Update a book": "/books/<id> [PUT]",
+            "Delete a book": "/books/<id> [DELETE]",
+            "Search books by title (query)": "/books?title=<search_term> [GET]",
+            "Search books by title (path)": "/books/title/<title> [GET]",
+            "Get all books sorted by price": "/books/sort [GET]"
+        }
+        return {
+            "Book Store API": "Welcome!",
+            "available_endpoints": endpoints
+        }, 200
+
 api.add_resource(BookList, '/books')
 api.add_resource(Book, '/books/<int:book_id>')
 api.add_resource(BookTitleSearch, '/books/title/<string:title>')
 api.add_resource(BookSortedByPrice, '/books/sort')
+api.add_resource(Home, '/')
 
 # This is a sample Python script.
-
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
