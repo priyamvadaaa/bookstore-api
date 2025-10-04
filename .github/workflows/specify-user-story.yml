@@ -1,0 +1,39 @@
+name: Specify User Story Branch Automation
+
+on:
+  workflow_dispatch:
+    inputs:
+      user_story:
+        description: 'User story branch name (e.g., feature/001-add-books)'
+        required: true
+
+jobs:
+  specify-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Create feature branch
+        run: git checkout -b ${{ github.event.inputs.user_story }}
+
+      - name: Run Specify (replace with your actual command)
+        run: specify update
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "Spec update for user story"
+          git push --set-upstream origin ${{ github.event.inputs.user_story }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
